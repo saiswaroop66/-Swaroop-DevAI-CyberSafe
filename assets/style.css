@@ -1,0 +1,289 @@
+/* ===========================
+   SentinelAI Professional Theme
+=========================== */
+
+html, body, [class*="css"]{
+    background:#0E1117;
+    color:white;
+    font-family:Segoe UI,sans-serif;
+}
+
+/* Hide Streamlit Branding */
+
+#MainMenu{
+    visibility:hidden;
+}
+
+footer{
+    visibility:hidden;
+}
+
+header{
+    visibility:hidden;
+}
+
+/* ===========================
+Cards
+=========================== */
+
+.metric-card{
+
+    background:#1B263B;
+
+    padding:20px;
+
+    border-radius:15px;
+
+    border:1px solid #263859;
+
+    box-shadow:0px 0px 10px rgba(0,255,255,.1);
+
+    text-align:center;
+
+    transition:.3s;
+
+}
+
+.metric-card:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:0px 0px 20px cyan;
+
+}
+
+.metric-title{
+
+    font-size:18px;
+
+    color:#A5B4FC;
+
+}
+
+.metric-value{
+
+    font-size:42px;
+
+    color:white;
+
+    font-weight:bold;
+
+}
+
+/* ===========================
+Sidebar
+=========================== */
+
+section[data-testid="stSidebar"]{
+
+    background:#111827;
+
+}
+
+/* ===========================
+Buttons
+=========================== */
+
+.stButton>button{
+
+    width:100%;
+
+    border-radius:12px;
+
+    background:#2563EB;
+
+    color:white;
+
+    border:none;
+
+    padding:12px;
+
+    font-weight:bold;
+
+}
+
+.stButton>button:hover{
+
+    background:#1D4ED8;
+
+}
+
+/* ===========================
+Upload Box
+=========================== */
+
+[data-testid="stFileUploader"]{
+
+    border:2px dashed cyan;
+
+    border-radius:12px;
+
+    padding:15px;
+
+}
+
+/* ===========================
+Success
+=========================== */
+
+.success-box{
+
+    background:#14532D;
+
+    padding:15px;
+
+    border-radius:10px;
+
+    color:white;
+
+}
+
+/* ===========================
+Warning
+=========================== */
+
+.warning-box{
+
+    background:#78350F;
+
+    padding:15px;
+
+    border-radius:10px;
+
+}
+
+/* ===========================
+Danger
+=========================== */
+
+.danger-box{
+
+    background:#7F1D1D;
+
+    padding:15px;
+
+    border-radius:10px;
+
+}
+
+/* ===========================
+Chat Box
+=========================== */
+
+.chat-box{
+
+    background:#1E293B;
+
+    padding:20px;
+
+    border-radius:12px;
+
+    margin-top:10px;
+
+}
+
+/* ===========================
+Report
+=========================== */
+
+.report-card{
+
+    background:#1E3A8A;
+
+    border-radius:12px;
+
+    padding:20px;
+
+}
+
+/* ===========================
+Title
+=========================== */
+
+.big-title{
+
+    font-size:38px;
+
+    font-weight:bold;
+
+    color:#38BDF8;
+
+}
+
+/* ===========================
+Subtitle
+=========================== */
+
+.subtitle{
+
+    color:#CBD5E1;
+
+    font-size:18px;
+
+}
+
+/* ===========================
+Table
+=========================== */
+
+table{
+
+    background:#111827;
+
+    color:white;
+
+}
+
+/* ===========================
+Animation
+=========================== */
+
+.metric-card{
+
+animation:fadeIn .6s ease-in-out;
+
+}
+
+@keyframes fadeIn{
+
+0%{
+
+opacity:0;
+
+transform:translateY(20px);
+
+}
+
+100%{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+
+/* ===========================
+Scrollbar
+=========================== */
+
+::-webkit-scrollbar{
+
+width:8px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+background:#38BDF8;
+
+border-radius:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+background:#0E1117;
+
+}
