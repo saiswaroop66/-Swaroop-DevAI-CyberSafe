@@ -4,35 +4,63 @@ import re
 class LogParser:
 
     def parse_file(self, file_path):
-        """
-        Detect log type and parse.
-        """
-
-        with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
-            lines = f.readlines()
 
         logs = []
 
-        for line in lines:
+        with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
 
-            line = line.strip()
+            for line in f:
 
-            if not line:
-                continue
+                line = line.strip()
 
-            parsed = (
-                self.parse_apache(line)
-                or self.parse_auth(line)
-                or self.parse_firewall(line)
-            )
+                if not line:
+                    continue
 
-            if parsed:
-                logs.append(parsed)
+                parsed = (
+                    self.parse_auth(line)
+                    or self.parse_apache(line)
+                    or self.parse_firewall(line)
+                )
+
+                if parsed:
+                    logs.append(parsed)
 
         return logs
 
     # ---------------------------------------
-    # Apache / Nginx Logs
+    # Linux Authentication Logs
+    # ---------------------------------------
+
+    def parse_auth(self, line):
+
+        ip = re.search(r"from (\d+\.\d+\.\d+\.\d+)", line)
+
+        if not ip:
+            return None
+
+        event = "Unknown"
+
+        if "Failed password" in line:
+            event = "Failed Login"
+
+        elif "Invalid user" in line:
+            event = "Invalid User"
+
+        elif "Accepted password" in line:
+            event = "Successful Login"
+
+        elif "authentication failure" in line.lower():
+            event = "Authentication Failure"
+
+        return {
+            "type": "auth",
+            "ip": ip.group(1),
+            "event": event,
+            "raw": line
+        }
+
+    # ---------------------------------------
+    # Apache / Nginx
     # ---------------------------------------
 
     def parse_apache(self, line):
@@ -52,66 +80,36 @@ class LogParser:
         return {
             "type": "apache",
             "ip": match.group("ip"),
-            "time": match.group("time"),
             "request": match.group("request"),
             "status": int(match.group("status")),
             "raw": line
         }
 
     # ---------------------------------------
-    # Linux auth.log
-    # ---------------------------------------
-
-    def parse_auth(self, line):
-
-        pattern = (
-            r'(?P<month>\w+)'
-            r'\s+(?P<day>\d+)'
-            r'\s+(?P<time>\S+)'
-            r'.*Failed password.*from (?P<ip>\S+)'
-        )
-
-        match = re.search(pattern, line)
-
-        if not match:
-            return None
-
-        return {
-            "type": "auth",
-            "ip": match.group("ip"),
-            "time": f"{match.group('month')} {match.group('day')} {match.group('time')}",
-            "event": "Failed Login",
-            "raw": line
-        }
-
-    # ---------------------------------------
-    # Firewall Logs
+    # Firewall
     # ---------------------------------------
 
     def parse_firewall(self, line):
 
-        ip_match = re.search(r"SRC=(\S+)", line)
+        ip = re.search(r"SRC=(\d+\.\d+\.\d+\.\d+)", line)
 
-        if not ip_match:
+        if not ip:
             return None
 
         return {
             "type": "firewall",
-            "ip": ip_match.group(1),
-            "event": "Firewall Event",
+            "ip": ip.group(1),
             "raw": line
         }
 
-
-# ---------------------------------------
-# Testing
-# ---------------------------------------
 
 if __name__ == "__main__":
 
     parser = LogParser()
 
-    logs = parser.parse_file("../sample_logs/apache.log")
+    logs = parser.parse_file("sample_auth.log")
 
-    for log in logs:
+    print("Parsed Logs:", len(logs))
+
+    for log in logs[:10]:
         print(log)
