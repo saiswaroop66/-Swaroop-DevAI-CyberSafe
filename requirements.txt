@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+langchain
+langgraph
+langchain-groq
+python-dotenv
+pandas
+plotly
+pypdf
+chromadb
+sentence-transformers
+faiss-cpu
+python-multipart
+reportlab
