@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+
+.env
+
+data/uploads/
+data/chroma_db/
+
+reports/*.pdf
+
+.streamlit/secrets.toml
+
+.DS_Store
